@@ -59,6 +59,9 @@ preds <- predict(loaded_model, test)
 ```
 
 ## Github
+- Version Control System
+- RStudio works well with Github
+- How to setup it up: https://www.r-bloggers.com/rstudio-and-github/
 
 # Style
 ## Naming
