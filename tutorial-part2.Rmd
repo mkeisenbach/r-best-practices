@@ -168,7 +168,8 @@ name.of.function <- function(argument1, argument2, ...) {
 
 ```{r}
 get_mean <- function(x) {
-  return (sum(x)/length(x))
+  mean <- sum(x)/length(x)
+  return (mean)
 }
 
 lapply(iris[numeric_vars], get_mean)
