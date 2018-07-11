@@ -1,0 +1,134 @@
+---
+title: "R Programing - Best Practices"
+author: "Mei Eisenbach"
+output:
+    html_notebook: default
+---
+# Introduction
+- Why this workshop
+- What's covered
+- What's not covered
+
+# Workflow
+## General tips
+- Think about workflow first
+- Use directories
+- Use the features in your IDE
+
+## Workspace
+- Default behavior
+- Saving the workspace is bad
+- Clear Workspace: under the Session menu
+- Code is what's important
+
+## Projects
+- Have their own workspace
+- Working directory is set
+- Can be created from existing directories
+
+## Saving objects
+- As an alternative to saving the workspace, save objects to files.
+- saveRDS(), readRDS()
+
+Demo
+```{r message=FALSE, warning=FALSE}
+library(randomForest)
+
+data(iris)
+
+# create train and test datasets
+train_index <- sample(150, 0.80 * 150)
+train <- iris[train_index,]
+test <- iris[-train_index,]
+
+# train random forest model
+final_model <- randomForest(Species ~ ., data=iris)
+
+#save the model to disk
+saveRDS(final_model, "final_model.rds")
+```
+
+later...
+```{r}
+# load the model
+loaded_model <- readRDS("final_model.rds")
+loaded_model
+
+# make predictions using loaded model on "new" data
+preds <- predict(loaded_model, test)
+```
+
+## Github
+
+# Style
+## Naming
+
+### Typical naming schemes
+- Snake Case
+- Period Separated
+- Camel Case
+
+### Naming tips
+- Many workplaces will have their own standards
+- Be consistent
+- Strive for names that are concise and meaningful
+- Variable names should be nouns and function names should be verbs
+
+## Comments
+- Comment your code!
+- Comments should be informative
+
+## Spacing
+- Put a space before and after "->"
+- Put a space before and after = when naming arguments in function calls. 
+- Always put a space after a comma, never before, just like in regular English.
+
+## Organize your code
+- Use blank lines and comments to group sections of code.
+- Place all dependencies at the beginning of the script.
+
+# Styler
+- Written in 2017 by Lorenz Walthert with Kirill Müller and Yihui Xie
+- Once installed can be accessed from RStudio Add-ins
+- Default style is tidyverse’s
+- Customizable (https://lorenzwalthert.netlify.com/posts/stylerpost/)
+
+```{r}
+library(styler)
+```
+
+```{r}
+ugly_code <- "a<-function( x){1+1}           "
+style_text(ugly_code)
+```
+
+Other available commands:
+- style_file() styles .R and/or .Rmd files.
+- style_dir() styles all .R files in a directory.
+- style_pkg() styles the source files of an R package.
+- RStudio Addins for styling the active file, styling the current package and styling the highlighted code region.
+
+```{r}
+# Try the Addin:
+#   - Select the line below.
+#   - Go to the Addins menu and select "Style Selection"
+
+a<-function( x){1+1}           
+
+# To see that again, hit ctrl-Z to undo
+```
+
+```{r}
+# Styler does not reformat variable names
+
+variableName ="Camel Case"
+
+```
+
+```{r}
+# Try typing some ugly code of your own and then fix it with styler
+
+
+
+```
+

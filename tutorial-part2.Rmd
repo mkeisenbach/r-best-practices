@@ -1,0 +1,207 @@
+---
+title: "R Programing - Best Practices Part 2"
+author: Mei Eisenbach
+output:
+    html_notebook: default
+---
+# R Programming Patterns
+- Vectorization
+- DRY (Do not Repeat yourself)
+- Apply family of functions
+- Functions and Lambda functions
+
+## Vectorization
+In R everything is a vector. That is to say, all variables are vectors.
+```{r}
+# a scalar
+a <- 5
+length(a)
+```
+
+```{r}
+# vector
+b <- c(1, 2, 3)
+length(b)
+```
+
+```{r}
+# string
+s <- "foo"
+length(s)
+nchar(s)
+```
+
+```{r}
+# data frame
+a <- c(1, 2, 3)
+b <- c(2, 3, 4)
+df <- data.frame(a, b)
+length(df)
+```
+A data frame is a vector of vectors. So the length is the number of columns.
+
+### Vectorized Functions
+Since all variables are vectors, built-in functions and functions from libraries are designed to handle them.
+
+```{r}
+# adding scalars
+a <- 1
+b <- 2
+c <- a + b
+c
+```
+
+```{r}
+# adding vectors
+a <- c(1, 2, 3)
+b <- c(2, 3, 4)
+c <- a + b
+c
+```
+
+```{r}
+# Sides of a right triangle
+a <- c(3, 1, 1)
+b <- c(4, 1, 2)
+
+# TODO: Calculate and print the hypotenuse
+
+
+```
+Hint: $c = \sqrt(a^2 + b^2)$
+
+## DRY (Do not Repeat yourself)
+- "Every piece of knowledge must have a single, unambiguous, authoritative representation within a system"
+- No copying and pasting code
+- Programming principle formulated by Andy Hunt and Dave Thomas in their book The Pragmatic Programmer
+
+```{r}
+# create some fake data to work with
+customer_count <- matrix(sample(c(1:100), 28), nrow = 4, ncol = 7)
+customer_count
+```
+A matrix is collection of elements arranged in a two-dimensional rectangular layout. All the elements have the same type.
+
+```{r}
+# Bad:
+# Get the means for each weekday
+mon_mean <- mean(customer_count[,1])
+tue_mean <- mean(customer_count[,2])
+wed_mean <- mean(customer_count[,3])
+thu_mean <- mean(customer_count[,5])
+fri_mean <- mean(customer_count[,5])
+sat_mean <- mean(customer_count[,6])
+sun_mean <- mean(customer_count[,7])
+
+weekday_means <- c(mon_mean, tue_mean, wed_mean, thu_mean, fri_mean, sat_mean, sun_mean)
+weekday_means
+```
+Can you spot the bug?
+
+## Apply() family
+### apply()
+
+apply() operates on arrays and matrices. 
+
+Usage: apply(X, MARGIN, FUN, .)
+
+where
+X is an array or matrix
+MARGIN indicates how the function is applied: 1 for rows, 2 for colums
+FUN is the function applied to the data. Can be a user-defined function.
+... are optional arguments for the function
+
+```{r}
+# Good:
+# Get the means using apply on the columns
+apply(customer_count, 2, mean)
+```
+
+```{r}
+# TODO: Use the apply function to get totals per week
+
+
+```
+
+```{r}
+# apply a function to each element in the matrix
+apply(customer_count, c(1, 2), as.character)
+```
+
+```{r}
+as.character(customer_count)
+```
+But why would I use apply when the as.character function is vectorized?
+
+### lapply()
+lapply() returns a list of the same length as X where each element in X has the function applied.
+
+Usage: lapply(X, FUN, .)
+
+where
+X is an array or matrix
+FUN is the function applied to the data
+... are optional arguments
+
+```{r}
+data("iris")
+head(iris)
+```
+
+```{r}
+numeric_vars <- c(1:4)
+means <- lapply(iris[numeric_vars], mean)
+head(means)
+```
+
+```{r}
+# TODO: get the standard deviations of each variable
+
+
+
+```
+
+## Functions
+Function Definition
+
+name.of.function <- function(argument1, argument2, ...) {
+    statements
+    return(something)
+}
+
+```{r}
+get_mean <- function(x) {
+  return (sum(x)/length(x))
+}
+
+means <- lapply(iris[numeric_vars], get_mean)
+means
+```
+
+
+```{r}
+# TODO: write a function that calculates the standard deviation
+
+
+```
+
+## Lambda functions
+- Also known as anonymous functions.
+- Should be used only for short, one line actions.
+- Often used when the function is used only in one place.
+
+```{r}
+head(iris)
+
+# Add one to each value
+squares <- data.frame(lapply(iris[numeric_vars], (function(x) x+1)))
+head(squares)
+```
+
+```{r}
+# TODO: use a lambda function to multiple each value by 2
+#   and then use it using lapply()
+
+
+```
+
