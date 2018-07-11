@@ -163,13 +163,13 @@ Function Definition
 
 name.of.function <- function(argument1, argument2, ...) {
     statements
-    return (something)
+    return(something)
 }
 
 ```{r}
 get_mean <- function(x) {
   mean <- sum(x)/length(x)
-  return (mean)
+  return(mean)
 }
 
 lapply(iris[numeric_vars], get_mean)
