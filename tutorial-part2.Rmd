@@ -154,7 +154,7 @@ lapply(iris[numeric_vars], mean)
 
 ```{r}
 # TODO: get the standard deviations of each variable
-lapply(iris[numeric_vars], sd)
+
 
 ```
 
