@@ -166,6 +166,8 @@ name.of.function <- function(argument1, argument2, ...) {
     return(something)
 }
 
+Note: If the end of a function is reached without calling return, the value of the last evaluated expression is returned. It's good practice to explicitly return a value.
+
 ```{r}
 get_mean <- function(x) {
   mean <- sum(x)/length(x)
@@ -199,7 +201,6 @@ head(plus_one)
 ```{r}
 # TODO: use a lambda function to multiple each value by 2
 #   and then use it using lapply()
-
 
 
 ```
