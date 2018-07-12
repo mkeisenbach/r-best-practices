@@ -159,12 +159,14 @@ lapply(iris[numeric_vars], mean)
 ```
 
 ## Functions
+<pre>
 Function Definition
 
 name.of.function <- function(argument1, argument2, ...) {
     statements
     return(something)
 }
+</pre>
 
 Note: If the end of a function is reached without calling return, the value of the last evaluated expression is returned. It's good practice to explicitly return a value.
 
